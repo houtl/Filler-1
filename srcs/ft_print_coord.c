@@ -1,22 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free_board.c                                    :+:      :+:    :+:   */
+/*   ft_print_coord.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sclolus <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/05/18 01:15:57 by sclolus           #+#    #+#             */
-/*   Updated: 2017/05/29 21:36:46 by sclolus          ###   ########.fr       */
+/*   Created: 2017/06/17 02:52:26 by sclolus           #+#    #+#             */
+/*   Updated: 2017/06/17 02:55:24 by sclolus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
 
-void	ft_free_board(t_board *board)
+void	ft_print_coord(t_coord coord)
 {
-	free(board->player_1.map.map);
-	free(board->player_1.player_name);
-	free(board->player_2.map.map);
-	free(board->player_2.player_name);
-	free(board);
+	ft_putnbr((int)coord.x); //please fix explicite conversion
+	ft_putchar(' ');
+	ft_putnbr((int)coord.y);
+	ft_putchar('\n');
 }

@@ -6,7 +6,7 @@
 /*   By: sclolus <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/12 23:46:52 by sclolus           #+#    #+#             */
-/*   Updated: 2017/05/18 07:00:02 by sclolus          ###   ########.fr       */
+/*   Updated: 2017/06/17 04:22:27 by sclolus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,23 +36,40 @@
 # define PIECE_HEADER "Piece "
 # define PIECE_HEADER_LEN (sizeof(PIECE_HEADER) - 1)
 
-typedef uint8_t	t_id;
+typedef int32_t	t_id;
+
+typedef struct	s_coord
+{
+	uint32_t	x;
+	uint32_t	y;
+}				t_coord;
+
+typedef struct	s_map
+{
+	uint64_t	*map;
+	uint32_t	len_x;
+	uint32_t	len_y;
+	uint32_t	size;
+	uint32_t	long_nbr;
+}				t_map;
 
 typedef struct	s_champ
 {
-	t_id		player_number;
 	char		*player_name;
+	t_map		map;
+	t_coord		last_piece;
 	uint32_t	liberties;
+	t_id		player_number;
 }				t_champ;
 
 typedef struct	s_board
 {
 	uint32_t	len_x;
 	uint32_t	len_y;
-	uint64_t	*player_1;
-	uint64_t	*player_2;
-	uint32_t	long_nbr;
 	uint32_t	size_longs;
+	uint32_t	long_nbr;
+	t_champ		player_1;
+	t_champ		player_2;
 }				t_board;
 
 typedef struct	s_piece
@@ -67,17 +84,15 @@ typedef struct	s_piece
 typedef struct	s_init_champs_f
 {
 	char		*id;
-	uint32_t	(*f)(char *, t_champ *);
+	int32_t		(*f)(char *, t_champ *);
 }				t_init_champs_f;
 
-
-t_champ			*ft_init_champion(void);
 
 /*
 ** Parsing
 */
 
-void			ft_get_board_stats(t_board *board);
+int32_t			ft_get_board_stats(t_board *board);
 uint32_t		*ft_get_filler_lens(char *line);
 int32_t			ft_check_board_lines(t_list	*lst, t_board *board);
 int32_t			ft_check_piece_lines(t_list	*lst, t_piece *piece);
@@ -86,6 +101,38 @@ void			ft_lst_push_back(t_list **lst, t_list *new);
 uint32_t		ft_lines_to_long(t_list *lst, t_board *board);
 uint32_t		ft_piece_to_long(t_list *lst, t_piece *piece);
 t_piece			*ft_get_piece(void);
+
+/*
+** t_champ init()
+*/
+
+int32_t			ft_init_champs(t_list *lines, t_board *board);
+int32_t			ft_init_champion(t_board *board);
+
+
+/*
+** Solve
+*/
+
+uint32_t		ft_solve(t_board *board, t_piece *piece);
+uint32_t		ft_claim(t_piece *piece, t_board *board, t_coord pos);
+uint32_t		ft_overwrite_board(t_piece *piece, t_board *board
+					, t_coord pos);
+uint32_t		ft_can_be_connected(t_piece *piece, t_board *board
+									, t_coord pos);
+t_map			*ft_get_sandbox_map(t_board *board);
+uint32_t		ft_get_liberties(t_board *board
+					, uint32_t player_index);
+uint32_t		ft_get_liberties_after_claim(t_board *board, t_piece *piece
+					, t_coord pos, uint32_t index_player);
+uint32_t		ft_get_line_liberties(t_board *board, uint32_t player_index
+									, uint32_t y);
+void			ft_put_piece(t_map *map, t_piece *piece
+							, t_coord pos);
+t_coord			ft_get_pos(uint32_t index, t_board *board);
+void			ft_print_coord(t_coord coord);
+uint32_t		ft_get_manhattan_distance(t_board *board, uint32_t player_index
+									  , t_coord pos);
 
 /*
 ** Free functions
@@ -110,3 +157,4 @@ void			ft_free_piece(t_piece *piece);
 
 int32_t			ft_error(uint32_t n, char **str, int32_t return_status);
 #endif
+

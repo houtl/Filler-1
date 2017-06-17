@@ -1,22 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free_board.c                                    :+:      :+:    :+:   */
+/*   ft_get_sand_box_map.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sclolus <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/05/18 01:15:57 by sclolus           #+#    #+#             */
-/*   Updated: 2017/05/29 21:36:46 by sclolus          ###   ########.fr       */
+/*   Created: 2017/05/22 03:31:58 by sclolus           #+#    #+#             */
+/*   Updated: 2017/05/22 04:42:42 by sclolus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
 
-void	ft_free_board(t_board *board)
+long	*ft_get_sandbox_map(t_board *board)
 {
-	free(board->player_1.map.map);
-	free(board->player_1.player_name);
-	free(board->player_2.map.map);
-	free(board->player_2.player_name);
-	free(board);
+	static long	*sandbox = NULL;
+
+	if (!sandbox)
+		if (!(sandbox = (long*)ft_memalloc(board->size_longs)))
+			return (NULL);
+	return (sandbox);
 }

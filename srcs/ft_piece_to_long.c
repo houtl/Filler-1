@@ -6,7 +6,7 @@
 /*   By: sclolus <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/18 06:49:42 by sclolus           #+#    #+#             */
-/*   Updated: 2017/05/18 07:10:56 by sclolus          ###   ########.fr       */
+/*   Updated: 2017/05/22 02:50:27 by sclolus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ uint32_t		ft_piece_to_long(t_list *lst, t_piece *piece)
 	uint32_t	x;
 	uint32_t	size;
 
-	lst = lst->next;
 	piece->long_nbr = (piece->len_x / (sizeof(uint64_t) * 8))
 					+ ((piece->len_x % (sizeof(uint64_t) * 8)) ? 1 : 0);
 	size = piece->long_nbr * piece->len_y;

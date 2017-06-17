@@ -6,27 +6,27 @@
 /*   By: sclolus <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/12 23:58:06 by sclolus           #+#    #+#             */
-/*   Updated: 2017/05/18 00:56:57 by sclolus          ###   ########.fr       */
+/*   Updated: 2017/05/29 21:35:45 by sclolus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
 
 
-void	ft_put_list(t_list *lst)
-{
-	uint32_t	i;
+/* static void	ft_put_list(t_list *lst) */
+/* { */
+/* 	uint32_t	i; */
 
-	i = 0;
-	ft_putendl("");
-	while (lst)
-	{
-		ft_putnbr(i++);
-		ft_putstr(": ");
-		ft_putendl(lst->content);
-		lst = lst->next;
-	}
-}
+/* 	i = 0; */
+/* 	ft_putendl(""); */
+/* 	while (lst) */
+/* 	{ */
+/* 		ft_putnbr((int)i++); */
+/* 		ft_putstr(": "); */
+/* 		ft_putendl(lst->content); */
+/* 		lst = lst->next; */
+/* 	} */
+/* } */
 
 /* static int32_t	ft_is_line_champ_stats(char *line) */
 /* { */
@@ -100,7 +100,7 @@ void	ft_put_list(t_list *lst)
 /* 	ft_putendl(champ->player_name); */
 /* } */
 
-t_list	*ft_get_header_vm_lines(void)
+static t_list	*ft_get_header_vm_lines(void)
 {
 	t_list		*tmp;
 	t_list		*lines;
@@ -125,14 +125,14 @@ t_list	*ft_get_header_vm_lines(void)
 	return (lines);
 }
 
-static uint32_t	ft_exec_launched_statement(char *line, t_champ *champs)
+static int32_t	ft_exec_launched_statement(char *line, t_champ *champs)
 {
 	(void)line;
 	(void)champs;
 	return (1);
 }
 
-static uint32_t	ft_get_player_stats(char *line, t_champ *champs)
+static int32_t	ft_get_player_stats(char *line, t_champ *champs)
 {
 	uint32_t	i;
 	uint32_t	u;
@@ -164,24 +164,21 @@ static uint32_t	ft_get_player_stats(char *line, t_champ *champs)
 	return (1);
 }
 
-uint32_t		ft_put_init_error(char *line, t_champ *champs)
+static int32_t			ft_put_init_error(char *line, t_champ *champs)
 {
 	(void)line;
 	(void)champs;
 	return (ft_error(2, (char*[]){"Parsing error at: ", line}, 0));
 }
 
-t_champ	*ft_init_champs(t_list *lines)
+int32_t			ft_init_champs(t_list *lines, t_board *board)
 {
 	static t_init_champs_f		init_f[] = {
 		{PLAYER_SETTING_LINE, &ft_get_player_stats},
 		{LAUNCHED, &ft_exec_launched_statement},
 		{"", &ft_put_init_error}};
-	t_champ						*champs;
 	uint32_t					i;
 
-	if (!(champs = (t_champ*)ft_memalloc(sizeof(t_champ) * 2)))
-		return (NULL);
 	while (lines)
 	{
 		i = 0;
@@ -190,10 +187,10 @@ t_champ	*ft_init_champs(t_list *lines)
 			if (!(ft_strncmp(init_f[i].id, lines->content
 							, ft_strlen(init_f[i].id))))
 			{
-				if (!init_f[i].f(lines->content, champs))
+				if (!init_f[i].f(lines->content, &board->player_1))
 				{
-					ft_free_champs(champs);
-					return (NULL);
+					ft_free_champs(&board->player_1);
+					return (0);
 				}
 				else
 					break;
@@ -202,21 +199,19 @@ t_champ	*ft_init_champs(t_list *lines)
 		}
 		lines = lines->next;
 	}
-	return (champs);
+	return (1);
 }
 
-t_champ	*ft_init_champion(void)
+int32_t		ft_init_champion(t_board *board)
 {
-	t_champ		*champ;
 	t_list		*lines;
 
-	champ = NULL;
 	if (!(lines = ft_get_header_vm_lines()))
-		return (NULL);
-	if (!(champ = ft_init_champs(lines)))
+		return (0);
+	if (!(ft_init_champs(lines, board)))
 	{
 		ft_free_lst(lines);
-		return (NULL);
+		return (0);
 	}
-	return (champ);
+	return (1);
 }

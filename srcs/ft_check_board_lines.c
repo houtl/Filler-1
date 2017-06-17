@@ -6,7 +6,7 @@
 /*   By: sclolus <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/18 00:17:04 by sclolus           #+#    #+#             */
-/*   Updated: 2017/05/18 01:07:42 by sclolus          ###   ########.fr       */
+/*   Updated: 2017/06/01 19:54:32 by sclolus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static int32_t	ft_check_board_numbers(char *line, uint32_t index)
 	}
 	if (line[i] != ' ')
 		return (0);
-	tmp = ft_atoi(line);
+	tmp = (uint32_t)ft_atoi(line);
 	if (index - 1 == tmp)
 		return (1);
 	return (0);

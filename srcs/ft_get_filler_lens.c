@@ -6,7 +6,7 @@
 /*   By: sclolus <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/18 05:53:04 by sclolus           #+#    #+#             */
-/*   Updated: 2017/05/18 05:53:55 by sclolus          ###   ########.fr       */
+/*   Updated: 2017/06/01 19:55:04 by sclolus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ uint32_t	*ft_get_filler_lens(char *line)
 		ft_error(1, (char*[]){"Invalid lens format"}, 0);
 		return (NULL);
 	}
-	lens[1] = ft_atoi(line);
+	lens[1] = (uint32_t)ft_atoi(line);
 	while (ft_isdigit(*line))
 		line++;
 	if (*line)
@@ -39,7 +39,7 @@ uint32_t	*ft_get_filler_lens(char *line)
 		ft_error(1, (char*[]){"Invalid lens format"}, 0);
 		return (NULL);
 	}
-	lens[0] = ft_atoi(line);
+	lens[0] = (uint32_t)ft_atoi(line);
 	while (ft_isdigit(*line))
 		line++;
 	if (!*line || ft_strcmp(":", line))

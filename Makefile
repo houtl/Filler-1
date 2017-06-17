@@ -15,11 +15,20 @@ SRC= srcs/main.c \
 	srcs/ft_get_piece.c \
 	srcs/ft_check_piece_lines.c \
 	srcs/ft_get_filler_lens.c \
-	srcs/ft_read_piece.c
+	srcs/ft_read_piece.c \
+	srcs/ft_claim.c \
+	srcs/ft_get_liberties.c \
+	srcs/ft_get_sandbox.c \
+	srcs/ft_put_piece.c \
+	srcs/ft_solve.c \
+	srcs/ft_print_coord.c \
+	srcs/ft_get_pos.c \
+	srcs/ft_get_liberties_after_claim.c \
+	srcs/ft_get_manhattan_distance.c
 OBJ= $(SRC:.c=.o)
 HDR_PATH= ./libft/includes/
 CC= gcc
-CC_FLAGS= -Wall -Werror -Wextra
+CC_FLAGS= -Weverything -Wall -Werror -Wextra -g3 -fsanitize=address -fsanitize-blacklist=my_ignores.txt
 
 all: $(NAME)
 

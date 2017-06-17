@@ -1,22 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free_board.c                                    :+:      :+:    :+:   */
+/*   ft_get_manhattan_distance.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sclolus <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/05/18 01:15:57 by sclolus           #+#    #+#             */
-/*   Updated: 2017/05/29 21:36:46 by sclolus          ###   ########.fr       */
+/*   Created: 2017/06/17 04:15:23 by sclolus           #+#    #+#             */
+/*   Updated: 2017/06/17 04:23:47 by sclolus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
 
-void	ft_free_board(t_board *board)
+uint32_t	ft_get_manhattan_distance(t_board *board, uint32_t player_index
+									  , t_coord pos)
 {
-	free(board->player_1.map.map);
-	free(board->player_1.player_name);
-	free(board->player_2.map.map);
-	free(board->player_2.player_name);
-	free(board);
+	if (!player_index)
+		return ((uint32_t)ft_distance(board->player_1.last_piece.x, pos.x) +
+				(uint32_t)ft_distance(board->player_1.last_piece.y, pos.y));
+	else
+		return ((uint32_t)ft_distance(board->player_2.last_piece.x, pos.x) +
+				(uint32_t)ft_distance(board->player_2.last_piece.y, pos.y));
 }

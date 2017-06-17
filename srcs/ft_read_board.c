@@ -6,21 +6,11 @@
 /*   By: sclolus <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/13 01:41:08 by sclolus           #+#    #+#             */
-/*   Updated: 2017/05/18 07:08:07 by sclolus          ###   ########.fr       */
+/*   Updated: 2017/05/29 21:38:08 by sclolus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
-
-t_board	*ft_get_board(void)
-{
-	t_board	*board;
-
-	if (!(board = (t_board*)ft_memalloc(sizeof(t_board))))
-		return (NULL);
-	return (board);
-}
-
 
 static void		ft_clean_line_board(char **line_board)
 {
@@ -80,7 +70,7 @@ static t_list	*ft_get_playing_board_lines(t_board *board)
 }
 
 
-void	ft_put_lst(t_list *lst)
+static void	ft_put_lst(t_list *lst)
 {
 	while (lst)
 	{
@@ -89,22 +79,23 @@ void	ft_put_lst(t_list *lst)
 	}
 }
 
-void	ft_get_board_stats(t_board *board)
+int32_t	ft_get_board_stats(t_board *board)
 {
 	t_list	*lst;
 
 	if (ft_get_board_lens(board) == -1)
-		return ;
+		return (0);
 	if (!(lst = ft_get_playing_board_lines(board)))
-		return ;
+		return (0);
 	if (!ft_check_board_lines(lst, board))
 	{
 		ft_free_lst(lst);
 		ft_free_board(board);
 		ft_error(1, (char*[]){"Parsing error on board"}, 0);
-		return ;
+		return (0);
 	}
 	ft_put_lst(lst);
 
 	ft_lines_to_long(lst, board);
+	return (1);
 }

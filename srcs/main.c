@@ -6,26 +6,31 @@
 /*   By: sclolus <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/12 23:56:00 by sclolus           #+#    #+#             */
-/*   Updated: 2017/05/18 06:59:17 by sclolus          ###   ########.fr       */
+/*   Updated: 2017/06/17 04:25:03 by sclolus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
 
+uint32_t	ft_get_index(uint32_t y, uint32_t x, t_board *board);
+uint32_t	ft_get_index(uint32_t y, uint32_t x, t_board *board)
+{
+	ft_printf("index: %u\n", board->len_y * y + x);
+	return (board->len_y * y + x);
+}
+
 int	main(void)
 {
-	t_champ	*champ;
-	t_board	*board;
-	t_piece	*piece;
+	static t_board	board;
+	static t_piece	piece;
 
-	if (!(board = (t_board*)ft_memalloc(sizeof(t_board))))
+	if (!(ft_init_champion(&board)))
 		return (EXIT_FAILURE);
-	if (!(champ = ft_init_champion()))
+	if (!ft_get_board_stats(&board))
 		return (EXIT_FAILURE);
-	ft_get_board_stats(board);
-	if (!(piece = ft_get_piece()))
+	if (!(ft_get_piece_stats(&piece)))
 		return (EXIT_FAILURE);
-	if (!(ft_get_piece_stats(piece)))
-		return (EXIT_FAILURE);
+	ft_putnbr((int)ft_get_liberties(&board, 1));
+	ft_solve(&board, &piece);
 	return (0);
 }

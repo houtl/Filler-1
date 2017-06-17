@@ -1,22 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free_board.c                                    :+:      :+:    :+:   */
+/*   ft_get_pos.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sclolus <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/05/18 01:15:57 by sclolus           #+#    #+#             */
-/*   Updated: 2017/05/29 21:36:46 by sclolus          ###   ########.fr       */
+/*   Created: 2017/06/17 02:45:52 by sclolus           #+#    #+#             */
+/*   Updated: 2017/06/17 03:34:26 by sclolus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
 
-void	ft_free_board(t_board *board)
+t_coord	ft_get_pos(uint32_t index, t_board *board)
 {
-	free(board->player_1.map.map);
-	free(board->player_1.player_name);
-	free(board->player_2.map.map);
-	free(board->player_2.player_name);
-	free(board);
+	return ((t_coord){index % board->len_x, index / board->len_x});
 }
