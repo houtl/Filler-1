@@ -6,7 +6,7 @@
 /*   By: sclolus <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/13 01:41:08 by sclolus           #+#    #+#             */
-/*   Updated: 2017/05/29 21:38:08 by sclolus          ###   ########.fr       */
+/*   Updated: 2017/06/19 05:07:41 by sclolus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,20 +21,19 @@ static int32_t	ft_get_board_lens(t_board *board)
 {
 	char		*line_board __attribute__ ((cleanup(ft_clean_line_board)));
 	uint32_t	*lens;
+	int32_t	ret;
 
-	if (get_next_line(0, &line_board) > 0)
+
+	if ((ret = get_next_line(0, &line_board)) == -1)
+		return (-1);
+	if (ft_strnequ(line_board, MAP_LENS_HEADER, MAP_LENS_HEADER_LEN))
 	{
-		if (ft_strnequ(line_board, MAP_LENS_HEADER, MAP_LENS_HEADER_LEN))
-		{
-			lens = ft_get_filler_lens(line_board);
-			if (!lens || !(ft_memcpy(board, lens, sizeof(uint32_t) * 2)))
-				return (-1);
-		}
-		else
-			return (ft_error(1, (char*[]){INVALID_MAP_HEADER}, -1));
+		lens = ft_get_filler_lens(line_board);
+		if (!lens || !(ft_memcpy(board, lens, sizeof(uint32_t) * 2)))
+			return (-1);
 	}
 	else
-		return (ft_error(1, (char*[]){INVALID_BOARD_LINE}, -1));
+		return (ft_error(1, (char*[]){INVALID_MAP_HEADER}, -1));
 	return (0);
 }
 
@@ -70,15 +69,18 @@ static t_list	*ft_get_playing_board_lines(t_board *board)
 }
 
 
+# if DEBUG == 1
 static void	ft_put_lst(t_list *lst)
 {
 	while (lst)
 	{
-		ft_putendl(lst->content);
+		ft_putchar_fd('-', 2);
+		ft_putendl_fd(lst->content, 2);
 		lst = lst->next;
 	}
 }
 
+#endif
 int32_t	ft_get_board_stats(t_board *board)
 {
 	t_list	*lst;
@@ -94,8 +96,9 @@ int32_t	ft_get_board_stats(t_board *board)
 		ft_error(1, (char*[]){"Parsing error on board"}, 0);
 		return (0);
 	}
+	# if DEBUG == 1
 	ft_put_lst(lst);
-
+#endif
 	ft_lines_to_long(lst, board);
 	return (1);
 }

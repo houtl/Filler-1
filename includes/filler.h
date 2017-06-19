@@ -6,7 +6,7 @@
 /*   By: sclolus <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/12 23:46:52 by sclolus           #+#    #+#             */
-/*   Updated: 2017/06/17 04:22:27 by sclolus          ###   ########.fr       */
+/*   Updated: 2017/06/19 05:11:51 by sclolus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 // DEBUG
 
-# define CHECK(X) do{ft_putendl("_______");ft_putendl(#X);ft_putendl("_______");}while(0);
+# define CHECK(X) do{ft_putendl_fd("_______", 2);ft_putendl_fd(#X, 2);ft_putendl_fd("_______", 2);}while(0);
 
 # include "libft.h"
 # include <stdint.h>
@@ -35,6 +35,8 @@
 
 # define PIECE_HEADER "Piece "
 # define PIECE_HEADER_LEN (sizeof(PIECE_HEADER) - 1)
+
+#define DEBUG 1
 
 typedef int32_t	t_id;
 
@@ -59,7 +61,7 @@ typedef struct	s_champ
 	t_map		map;
 	t_coord		last_piece;
 	uint32_t	liberties;
-	t_id		player_number;
+	t_id		player_number; //?
 }				t_champ;
 
 typedef struct	s_board
@@ -70,6 +72,8 @@ typedef struct	s_board
 	uint32_t	long_nbr;
 	t_champ		player_1;
 	t_champ		player_2;
+	uint32_t	player_index;
+	char		pad[4];
 }				t_board;
 
 typedef struct	s_piece
@@ -84,7 +88,7 @@ typedef struct	s_piece
 typedef struct	s_init_champs_f
 {
 	char		*id;
-	int32_t		(*f)(char *, t_champ *);
+	int32_t		(*f)(char *, t_board *);
 }				t_init_champs_f;
 
 
@@ -106,7 +110,7 @@ t_piece			*ft_get_piece(void);
 ** t_champ init()
 */
 
-int32_t			ft_init_champs(t_list *lines, t_board *board);
+int32_t			ft_init_champs(char *line, t_board *board);
 int32_t			ft_init_champion(t_board *board);
 
 
@@ -131,6 +135,7 @@ void			ft_put_piece(t_map *map, t_piece *piece
 							, t_coord pos);
 t_coord			ft_get_pos(uint32_t index, t_board *board);
 void			ft_print_coord(t_coord coord);
+void			ft_print_coord_err(t_coord coord);
 uint32_t		ft_get_manhattan_distance(t_board *board, uint32_t player_index
 									  , t_coord pos);
 
@@ -157,4 +162,3 @@ void			ft_free_piece(t_piece *piece);
 
 int32_t			ft_error(uint32_t n, char **str, int32_t return_status);
 #endif
-

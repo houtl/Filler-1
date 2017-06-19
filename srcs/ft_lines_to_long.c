@@ -6,44 +6,44 @@
 /*   By: sclolus <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/18 01:29:29 by sclolus           #+#    #+#             */
-/*   Updated: 2017/06/17 04:14:03 by sclolus          ###   ########.fr       */
+/*   Updated: 2017/06/17 05:07:09 by sclolus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
 
-static void	ft_put_longs_board(uint64_t *longs, t_board *board)
-{
-	uint32_t	i;
-	uint32_t	u;
+/* static void	ft_put_longs_board(uint64_t *longs, t_board *board) */
+/* { */
+/* 	uint32_t	i; */
+/* 	uint32_t	u; */
 
-	u = 0;
-	while (u < board->len_y)
-	{
-		i = 0;
-		while (i < board->long_nbr)
-		{
-			ft_printf("%064b", longs[u * board->long_nbr + i]);
-			i++;
-		}
-		ft_putendl("");
-		u++;
-	}
-	u = 0;
-	ft_putendl("__");
-	while (u < board->len_y)
-	{
-		i = 0;
-		while (i < board->long_nbr)
-		{
-			ft_printf("%064b", longs[u * board->long_nbr + i + board->size_longs]);
-			i++;
-		}
-		ft_putendl("");
-		u++;
-	}
+/* 	u = 0; */
+/* 	while (u < board->len_y) */
+/* 	{ */
+/* 		i = 0; */
+/* 		while (i < board->long_nbr) */
+/* 		{ */
+/* 			ft_printf("%064b", longs[u * board->long_nbr + i]); */
+/* 			i++; */
+/* 		} */
+/* 		ft_putendl(""); */
+/* 		u++; */
+/* 	} */
+/* 	u = 0; */
+/* 	ft_putendl("__"); */
+/* 	while (u < board->len_y) */
+/* 	{ */
+/* 		i = 0; */
+/* 		while (i < board->long_nbr) */
+/* 		{ */
+/* 			ft_printf("%064b", longs[u * board->long_nbr + i + board->size_longs]); */
+/* 			i++; */
+/* 		} */
+/* 		ft_putendl(""); */
+/* 		u++; */
+/* 	} */
 
-}
+/* } */
 
 static void		ft_assign_t_board_players(uint64_t *longs, t_board *board)
 {
@@ -104,7 +104,7 @@ uint32_t		ft_lines_to_long(t_list *lst, t_board *board)
 		lst = lst->next;
 		u++;
 	}
-	ft_put_longs_board(longs, board);
+//	ft_put_longs_board(longs, board);
 	ft_assign_t_board_players(longs, board);
 	return (1);
 }

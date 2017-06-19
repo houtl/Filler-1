@@ -6,7 +6,7 @@
 /*   By: sclolus <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/22 03:19:05 by sclolus           #+#    #+#             */
-/*   Updated: 2017/06/17 03:15:51 by sclolus          ###   ########.fr       */
+/*   Updated: 2017/06/17 05:09:06 by sclolus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,6 @@ uint32_t	ft_get_liberties(t_board *board, uint32_t player_index)
 # endif
 		i++;
 	}
-	ft_putchar('\n');
+//	ft_putchar('\n');
 	return (liberties);
 }

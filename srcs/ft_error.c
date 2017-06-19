@@ -6,13 +6,13 @@
 /*   By: sclolus <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/13 01:07:10 by sclolus           #+#    #+#             */
-/*   Updated: 2017/05/13 01:08:49 by sclolus          ###   ########.fr       */
+/*   Updated: 2017/06/19 04:10:31 by sclolus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
 
-int32_t	ft_error(uint32_t n, char **str, int32_t return_status)
+int32_t	ft_error(uint32_t n , char **str , int32_t return_status)
 {
 	uint32_t	i;
 

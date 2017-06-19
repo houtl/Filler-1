@@ -6,7 +6,7 @@
 /*   By: sclolus <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/18 05:49:17 by sclolus           #+#    #+#             */
-/*   Updated: 2017/05/18 07:09:16 by sclolus          ###   ########.fr       */
+/*   Updated: 2017/06/19 05:08:16 by sclolus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,11 @@ static int32_t	ft_get_piece_lens(t_piece *piece)
 
 	if (get_next_line(0, &line_piece) > 0)
 	{
-		ft_putendl(line_piece);
 		if (ft_strnequ(line_piece, PIECE_HEADER, PIECE_HEADER_LEN))
 		{
+			#if DEBUG == 1
+			ft_putendl_fd(line_piece, 2);
+#endif
 			lens = ft_get_filler_lens(line_piece);
 			if (!lens || !(ft_memcpy(&piece->len_x, lens, sizeof(uint32_t) * 2)))
 				return (-1);
@@ -70,6 +72,19 @@ static t_list	*ft_get_playing_piece_lines(t_piece *piece)
 	return (lst);
 }
 
+# if DEBUG == 1
+static void	ft_put_lst(t_list *lst)
+{
+	while (lst)
+	{
+		ft_putchar_fd('-', 2);
+		ft_putendl_fd(lst->content, 2);
+		lst = lst->next;
+	}
+}
+
+#endif
+
 uint32_t	ft_get_piece_stats(t_piece *piece)
 {
 	t_list	*lst;
@@ -85,6 +100,10 @@ uint32_t	ft_get_piece_stats(t_piece *piece)
 		ft_error(1, (char*[]){"Parsing error on piece"}, 0);
 		return (0);
 	}
+	# if DEBUG == 1
+	ft_put_lst(lst);
+#endif
+
 	ft_piece_to_long(lst, piece);
 	return (1);
 }
