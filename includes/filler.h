@@ -6,7 +6,7 @@
 /*   By: sclolus <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/12 23:46:52 by sclolus           #+#    #+#             */
-/*   Updated: 2017/06/20 03:02:46 by sclolus          ###   ########.fr       */
+/*   Updated: 2017/06/21 13:17:28 by sclolus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@
 # define PIECE_HEADER "Piece "
 # define PIECE_HEADER_LEN (sizeof(PIECE_HEADER) - 1)
 
-#define DEBUG 1
+#define DEBUG 0
 
 typedef int32_t	t_id;
 

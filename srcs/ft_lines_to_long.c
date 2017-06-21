@@ -6,7 +6,7 @@
 /*   By: sclolus <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/18 01:29:29 by sclolus           #+#    #+#             */
-/*   Updated: 2017/06/17 05:07:09 by sclolus          ###   ########.fr       */
+/*   Updated: 2017/06/21 13:27:12 by sclolus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,18 +85,8 @@ uint32_t		ft_lines_to_long(t_list *lst, t_board *board)
 			{
 				if (((char*)lst->content)[(i * sizeof(uint64_t) * 8) + x + 4] == 'O')
 					longs[u * board->long_nbr + i] |= (1UL << ((sizeof(uint64_t) * 8) - 1)) >> x;
-				else if (((char*)lst->content)[(i * sizeof(uint64_t) * 8) + x + 4] == 'o')
-				{
-					board->player_1.last_piece = (t_coord){x, u};
-					longs[u * board->long_nbr + i] |= (1UL << ((sizeof(uint64_t) * 8) - 1)) >> x;
-				}
 				else if (((char*)lst->content)[(i * sizeof(uint64_t) * 8) + x + 4] == 'X')
 					longs[u * board->long_nbr + i + size] |= (1UL << ((sizeof(uint64_t) * 8) - 1)) >> x;
-				else if (((char*)lst->content)[(i * sizeof(uint64_t) * 8) + x + 4] == 'x')
-				{
-					board->player_1.last_piece = (t_coord){x, u};
-					longs[u * board->long_nbr + i] |= (1UL << ((sizeof(uint64_t) * 8) - 1)) >> x;
-				}
 				x++;
 			}
 			i++;
