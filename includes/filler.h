@@ -6,7 +6,7 @@
 /*   By: sclolus <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/12 23:46:52 by sclolus           #+#    #+#             */
-/*   Updated: 2017/06/19 05:11:51 by sclolus          ###   ########.fr       */
+/*   Updated: 2017/06/20 03:02:46 by sclolus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ typedef struct	s_piece
 	uint32_t	len_y;
 	uint32_t	long_nbr;
 	uint32_t	size_longs;
+	t_coord		empty_pos;
 }				t_piece;
 
 typedef struct	s_init_champs_f
@@ -105,6 +106,16 @@ void			ft_lst_push_back(t_list **lst, t_list *new);
 uint32_t		ft_lines_to_long(t_list *lst, t_board *board);
 uint32_t		ft_piece_to_long(t_list *lst, t_piece *piece);
 t_piece			*ft_get_piece(void);
+
+/*
+** Normalization
+*/
+
+void			ft_normalize_piece(t_piece *piece);
+void			ft_normalize_lines(t_piece *piece);
+void			ft_normalize_col(t_piece *piece);
+void			ft_normalize_extra_col(t_piece *piece);
+void			ft_normalize_extra_lines(t_piece *piece);
 
 /*
 ** t_champ init()
@@ -134,10 +145,16 @@ uint32_t		ft_get_line_liberties(t_board *board, uint32_t player_index
 void			ft_put_piece(t_map *map, t_piece *piece
 							, t_coord pos);
 t_coord			ft_get_pos(uint32_t index, t_board *board);
-void			ft_print_coord(t_coord coord);
-void			ft_print_coord_err(t_coord coord);
-uint32_t		ft_get_manhattan_distance(t_board *board, uint32_t player_index
-									  , t_coord pos);
+void			ft_print_coord(t_coord coord, t_piece *piece);
+void			ft_print_coord_err(t_coord coord, t_piece *piece);
+
+/*
+** Distance processing
+*/
+
+uint32_t		ft_get_distance(t_board *board, t_piece *piece, t_coord pos);
+uint32_t		ft_get_manhattan_distance(t_coord pos_1
+									, t_coord pos_2);
 
 /*
 ** Free functions

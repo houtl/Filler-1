@@ -6,7 +6,7 @@
 /*   By: sclolus <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/22 00:47:57 by sclolus           #+#    #+#             */
-/*   Updated: 2017/06/19 05:09:08 by sclolus          ###   ########.fr       */
+/*   Updated: 2017/06/21 06:10:37 by sclolus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,15 @@ static uint32_t	ft_bin_mask_no_touch(t_piece *piece, t_board *board
 
 	ret = 0;
 	x = 0;
-	while (x < piece->long_nbr)
+	while (x < piece->long_nbr || ret)
 	{
-		tmp = (piece->lines[y * piece->long_nbr + x] >> coord->x) | ret;
-		if (tmp & ((t_champ*)&board->player_1)[board->player_index ^ 1].map.map[(coord->y) * board->long_nbr + x])
+		tmp = (x < piece->long_nbr ? (piece->lines[y * piece->long_nbr + x] >> (coord->x & 63)) | ret
+			   : ret);
+		if (tmp & ((t_champ*)&board->player_1)[board->player_index ^ 1].map
+			.map[(coord->y) * board->long_nbr + x + (coord->x / 64)])
 			return (0);
-		ret = (piece->lines[y * piece->long_nbr + x]
-			<< (board->len_x - coord->x));
+		ret = (x < piece->long_nbr ? (piece->lines[y * piece->long_nbr + x] << (63 - (coord->x & 63))) :
+			   0);
 		x++;
 	}
 	return (1);
@@ -41,10 +43,10 @@ uint32_t	ft_overwrite_board(t_piece *piece, t_board *board
 
 	u = pos.y;
 	i = pos.x;
-	if (u + piece->len_y >= board->len_y
-		|| i + piece->len_x >= board->len_x)
+	if (u + piece->len_y > board->len_y
+		|| i + piece->len_x > board->len_x)
 		return (0);
-	while (u < pos.y + board->len_y
+	while (u < board->len_y
 		&& u - pos.y < piece->len_y)
 	{
 		if (!ft_bin_mask_no_touch(piece, board, &(t_coord){i, u}, u - pos.y))
@@ -66,14 +68,22 @@ static uint32_t	ft_bin_mask_one_touch(t_piece *piece, t_board *board
 	ret = 0;
 	x = 0;
 	nbr_touch = 0;
-	while (x < piece->long_nbr)
+	while (x < piece->long_nbr || ret)
 	{
-		tmp = (piece->lines[y * piece->long_nbr + x] >> coord->x) | ret;
-		if (!ft_is_power_of_two((mask = (tmp & ((t_champ*)&board->player_1)[board->player_index].map.map[(coord->y) * board->long_nbr + x]))))
+		tmp = (x < piece->long_nbr ? (piece->lines[y * piece->long_nbr + x] >> (coord->x & 63)) | ret
+			   : ret);
+		/* ft_putstr_fd("\ntmp: ", 2); */
+		/* ft_putnbr_fd((int)tmp, 2); */
+		if (!ft_is_power_of_two((mask = (tmp
+			& ((t_champ*)&board->player_1)[board->player_index].map.map[(coord->y)
+			* board->long_nbr + x + (coord->x / 64)]))))
 			return (2);
 		if (mask)
 			nbr_touch++;
-		ret = (piece->lines[y * piece->long_nbr + x] << (board->len_x - coord->x));
+		ret = (x < piece->long_nbr ? (piece->lines[y * piece->long_nbr + x] << (63 - (coord->x & 63))) :
+			   0);
+		/* ft_putstr_fd("\nret: ", 2); */
+		/* ft_putnbr_fd((int)ret, 2); */
 		x++;
 	}
 	return (nbr_touch == 1 ? 1 : 0);

@@ -6,7 +6,7 @@
 /*   By: sclolus <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/18 05:49:17 by sclolus           #+#    #+#             */
-/*   Updated: 2017/06/19 05:08:16 by sclolus          ###   ########.fr       */
+/*   Updated: 2017/06/20 00:26:16 by sclolus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ uint32_t	ft_get_piece_stats(t_piece *piece)
 	# if DEBUG == 1
 	ft_put_lst(lst);
 #endif
-
 	ft_piece_to_long(lst, piece);
+	ft_normalize_piece(piece);
 	return (1);
 }

@@ -24,11 +24,17 @@ SRC= srcs/main.c \
 	srcs/ft_print_coord.c \
 	srcs/ft_get_pos.c \
 	srcs/ft_get_liberties_after_claim.c \
-	srcs/ft_get_manhattan_distance.c
+	srcs/ft_get_distance.c \
+	srcs/ft_get_manhattan_distance.c \
+	srcs/ft_normalize_lines.c \
+	srcs/ft_normalize_col.c \
+	srcs/ft_normalize_piece.c \
+	srcs/ft_normalize_extra_lines.c \
+	srcs/ft_normalize_extra_col.c
 OBJ= $(SRC:.c=.o)
 HDR_PATH= ./libft/includes/
 CC= gcc
-CC_FLAGS= -Weverything -Wall -Werror -Wextra #-g3 -fsanitize=address -fsanitize-blacklist=my_ignores.txt
+CC_FLAGS= -Weverything -Wall -Werror -Wextra -g3 -fsanitize=address -fsanitize-blacklist=my_ignores.txt
 
 all: $(NAME)
 
