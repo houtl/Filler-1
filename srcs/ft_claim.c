@@ -6,7 +6,7 @@
 /*   By: sclolus <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/22 00:47:57 by sclolus           #+#    #+#             */
-/*   Updated: 2017/06/21 13:53:37 by sclolus          ###   ########.fr       */
+/*   Updated: 2017/06/22 12:33:34 by sclolus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static uint32_t	ft_bin_mask_no_touch(t_piece *piece, t_board *board
 		if (tmp & ((t_champ*)&board->player_1)[board->player_index ^ 1].map
 			.map[(coord->y) * board->long_nbr + x + (coord->x / 64)])
 			return (0);
-		if (coord->x)
+		if ((coord->x & 63))
 			ret = (x < piece->long_nbr ? (piece->lines[y * piece->long_nbr + x] << (64 - (coord->x & 63))) :
 				   0);
 		else
@@ -93,7 +93,7 @@ uint32_t	ft_overwrite_board(t_piece *piece, t_board *board
 /* } */
 
 static uint32_t	ft_bin_mask_one_touch(t_piece *piece, t_board *board
-									 , t_coord coord, uint32_t y)
+									 , t_coord coord, t_coord long_coord)
 {
 	uint64_t	tmp;
 	uint64_t	ret;
@@ -102,11 +102,23 @@ static uint32_t	ft_bin_mask_one_touch(t_piece *piece, t_board *board
 	uint32_t	nbr_touch;
 
 	i = 0;
-	while (i < piece->long_nbr)
+	nbr_touch = 0;
+	ret = 0;
+	while ((i < piece->long_nbr && (coord.x / 64) + i < board->long_nbr) || (ret && (coord.x / 64) + i < board->long_nbr))
 	{
-		tmp = piece->lines[y *
+		tmp = (i < piece->long_nbr) ? piece->lines[long_coord.y * piece->long_nbr + i] >> (coord.x & 63) | ret : ret;
+		if (!ft_is_power_of_two((mask = tmp & ((t_champ*)&board->player_1)[board->player_index].map.map[(coord.y)
+			* board->long_nbr + i + long_coord.x])))
+			return (2);
+		if (mask)
+			nbr_touch++;
+		if ((coord.x & 63) == 0)
+			ret = 0;
+		else
+			ret = (i < piece->long_nbr) ? piece->lines[long_coord.y * piece->long_nbr + i] << (64 - (coord.x & 63)) : 0;
 		i++;
 	}
+	return (nbr_touch);
 }
 
 uint32_t	ft_can_be_connected(t_piece *piece, t_board *board
@@ -124,7 +136,7 @@ uint32_t	ft_can_be_connected(t_piece *piece, t_board *board
 		return (0);
 	while (u < pos.y + piece->len_y)
 	{
-		nbr_touch += ft_bin_mask_one_touch(piece, board, (t_coord){i, u}, u - pos.y);
+		nbr_touch += ft_bin_mask_one_touch(piece, board, (t_coord){i, u}, (t_coord){pos.x / 64, u - pos.y});
 		if (nbr_touch > 1)
 			return (0);
 		u++;
@@ -141,7 +153,7 @@ uint32_t	ft_claim(t_piece *piece, t_board *board, t_coord pos)
 	x = pos.x;
 	uint32_t a = (!ft_overwrite_board(piece, board, pos));
 	uint32_t b = (ft_can_be_connected(piece, board, pos));
-	if ((a = 1 /* !ft_overwrite_board(piece, board, pos) */)
+	if ((a = !ft_overwrite_board(piece, board, pos))
 		&& (b = ft_can_be_connected(piece, board, pos)))
 	{
 #if DEBUG == 1

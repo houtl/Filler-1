@@ -6,7 +6,7 @@
 /*   By: sclolus <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/13 01:41:08 by sclolus           #+#    #+#             */
-/*   Updated: 2017/06/19 05:07:41 by sclolus          ###   ########.fr       */
+/*   Updated: 2017/06/22 12:38:10 by sclolus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,18 +69,6 @@ static t_list	*ft_get_playing_board_lines(t_board *board)
 }
 
 
-# if DEBUG == 1
-static void	ft_put_lst(t_list *lst)
-{
-	while (lst)
-	{
-		ft_putchar_fd('-', 2);
-		ft_putendl_fd(lst->content, 2);
-		lst = lst->next;
-	}
-}
-
-#endif
 int32_t	ft_get_board_stats(t_board *board)
 {
 	t_list	*lst;
@@ -96,9 +84,7 @@ int32_t	ft_get_board_stats(t_board *board)
 		ft_error(1, (char*[]){"Parsing error on board"}, 0);
 		return (0);
 	}
-	# if DEBUG == 1
-	ft_put_lst(lst);
-#endif
 	ft_lines_to_long(lst, board);
+	ft_free_lst(lst);
 	return (1);
 }

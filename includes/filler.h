@@ -6,7 +6,7 @@
 /*   By: sclolus <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/12 23:46:52 by sclolus           #+#    #+#             */
-/*   Updated: 2017/06/21 13:17:28 by sclolus          ###   ########.fr       */
+/*   Updated: 2017/06/22 13:10:20 by sclolus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ typedef struct	s_map
 
 typedef struct	s_champ
 {
-	char		*player_name;
 	t_map		map;
 	t_coord		last_piece;
 	uint32_t	liberties;
@@ -129,7 +128,7 @@ int32_t			ft_init_champion(t_board *board);
 ** Solve
 */
 
-uint32_t		ft_solve(t_board *board, t_piece *piece);
+void			ft_solve(t_board *board, t_piece *piece);
 uint32_t		ft_claim(t_piece *piece, t_board *board, t_coord pos);
 uint32_t		ft_overwrite_board(t_piece *piece, t_board *board
 					, t_coord pos);
@@ -147,6 +146,8 @@ void			ft_put_piece(t_map *map, t_piece *piece
 t_coord			ft_get_pos(uint32_t index, t_board *board);
 void			ft_print_coord(t_coord coord, t_piece *piece);
 void			ft_print_coord_err(t_coord coord, t_piece *piece);
+
+void			ft_end_game(t_board *board, t_piece *piece);
 
 /*
 ** Distance processing

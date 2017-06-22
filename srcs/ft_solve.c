@@ -6,14 +6,14 @@
 /*   By: sclolus <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/22 00:45:33 by sclolus           #+#    #+#             */
-/*   Updated: 2017/06/21 06:36:44 by sclolus          ###   ########.fr       */
+/*   Updated: 2017/06/22 11:21:52 by sclolus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
 
 
-uint32_t	ft_solve(t_board *board, t_piece *piece)
+void	ft_solve(t_board *board, t_piece *piece)
 {
 	uint32_t	i;
 	uint32_t	size;
@@ -27,7 +27,7 @@ uint32_t	ft_solve(t_board *board, t_piece *piece)
 	size = board->len_x * board->len_y;
 //	max_liberties = ~0U;
 	current_distance = ~0U;
-	pos = (t_coord){~0U, ~0U};
+	pos = (t_coord){123123123, 123123123};
 	while (i < size)
 	{
 		if (ft_claim(piece, board, ft_get_pos(i, board)))
@@ -57,5 +57,4 @@ uint32_t	ft_solve(t_board *board, t_piece *piece)
 	}
 	ft_print_coord(pos, piece);
 	ft_print_coord_err(pos, piece);
-	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: sclolus <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/13 01:02:05 by sclolus           #+#    #+#             */
-/*   Updated: 2017/05/13 01:03:08 by sclolus          ###   ########.fr       */
+/*   Updated: 2017/06/22 13:10:56 by sclolus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,5 @@
 
 void	ft_free_t_champ(t_champ *champ)
 {
-	free(champ->player_name);
 	free(champ);
 }
