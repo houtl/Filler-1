@@ -6,7 +6,7 @@
 /*   By: sclolus <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/18 00:17:04 by sclolus           #+#    #+#             */
-/*   Updated: 2017/06/01 19:54:32 by sclolus          ###   ########.fr       */
+/*   Updated: 2017/06/24 04:48:13 by sclolus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static int32_t	ft_check_line_integrity(char *line)
 	return (1);
 }
 
-int32_t			ft_check_board_lines(t_list	*lst, t_board *board)
+int32_t			ft_check_board_lines(t_list *lst, t_board *board)
 {
 	uint32_t	len;
 	uint32_t	i;

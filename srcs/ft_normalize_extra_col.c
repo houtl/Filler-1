@@ -6,7 +6,7 @@
 /*   By: sclolus <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/20 01:22:22 by sclolus           #+#    #+#             */
-/*   Updated: 2017/06/23 17:04:19 by sclolus          ###   ########.fr       */
+/*   Updated: 2017/06/24 04:49:10 by sclolus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int32_t	ft_is_col_empty(t_piece *piece, uint32_t index)
 	return (1);
 }
 
-void		ft_normalize_extra_col(t_piece *piece)
+void			ft_normalize_extra_col(t_piece *piece)
 {
 	uint32_t	i;
 	uint32_t	right_emptyness;
@@ -38,9 +38,9 @@ void		ft_normalize_extra_col(t_piece *piece)
 		if (ft_is_col_empty(piece, i))
 			right_emptyness++;
 		else
-			break;
+			break ;
 		if (i == 0)
-			break;
+			break ;
 		i--;
 	}
 	piece->len_x -= right_emptyness;

@@ -6,7 +6,7 @@
 /*   By: sclolus <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/18 01:29:29 by sclolus           #+#    #+#             */
-/*   Updated: 2017/06/23 16:38:02 by sclolus          ###   ########.fr       */
+/*   Updated: 2017/06/24 06:07:24 by sclolus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,31 +35,21 @@ uint32_t		ft_lines_to_long(t_list *lst, t_board *board)
 	uint32_t	size;
 
 	lst = lst->next;
-	board->long_nbr = (board->len_x / (sizeof(uint64_t) * 8))
-					+ ((board->len_x % (sizeof(uint64_t) * 8)) ? 1 : 0);
+	board->long_nbr = (board->len_x / 64) + ((board->len_x % 64) ? 1 : 0);
 	size = board->long_nbr * board->len_y;
 	board->size_longs = size;
 	if (!(longs = (uint64_t *)ft_memalloc(sizeof(uint64_t) * size * 2)))
 		return (0);
-	u = 0;
-	while (lst)
+	u = ~0U;
+	while (lst && (i = ~0U) == ~0U && (++u || 1))
 	{
-		i = 0;
-		while (i < board->long_nbr)
-		{
-			x = 0;
-			while (x < sizeof(uint64_t) * 8 && ((char*)lst->content)[(i * sizeof(uint64_t) * 8) + x + 4])
-			{
-				if (((char*)lst->content)[(i * sizeof(uint64_t) * 8) + x + 4] == 'O')
-					longs[u * board->long_nbr + i] |= (1UL << ((sizeof(uint64_t) * 8) - 1)) >> x;
-				else if (((char*)lst->content)[(i * sizeof(uint64_t) * 8) + x + 4] == 'X')
-					longs[u * board->long_nbr + i + size] |= (1UL << ((sizeof(uint64_t) * 8) - 1)) >> x;
-				x++;
-			}
-			i++;
-		}
+		while (++i < board->long_nbr && (x = ~0U) == ~0U)
+			while (++x < 64 && ((char*)lst->content)[(i * 64) + x + 4])
+				if (((char*)lst->content)[(i * 64) + x + 4] == 'O')
+					longs[u * board->long_nbr + i] |= (1UL << 63) >> x;
+				else if (((char*)lst->content)[(i * 64) + x + 4] == 'X')
+					longs[u * board->long_nbr + i + size] |= (1UL << 63) >> x;
 		lst = lst->next;
-		u++;
 	}
 	ft_assign_t_board_players(longs, board);
 	return (1);

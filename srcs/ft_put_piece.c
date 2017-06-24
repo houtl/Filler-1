@@ -6,14 +6,14 @@
 /*   By: sclolus <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/18 07:41:21 by sclolus           #+#    #+#             */
-/*   Updated: 2017/06/01 20:08:26 by sclolus          ###   ########.fr       */
+/*   Updated: 2017/06/24 04:44:21 by sclolus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
 
 static uint32_t	ft_put_piece_line(t_piece *piece, t_map *map
-									 , t_coord *coord, uint32_t y)
+								, t_coord *coord, uint32_t y)
 {
 	uint64_t	ret;
 	uint64_t	tmp;
@@ -27,14 +27,15 @@ static uint32_t	ft_put_piece_line(t_piece *piece, t_map *map
 		if (tmp & map->map[(coord->y) * map->long_nbr + x])
 			return (0);
 		map->map[(coord->y) * map->long_nbr + x] |= tmp;
-		ret = (piece->lines[y * piece->long_nbr + x] << (map->len_x - coord->x));
+		ret = (piece->lines[y * piece->long_nbr + x]
+			<< (map->len_x - coord->x));
 		x++;
 	}
 	return (1);
 }
 
 static uint32_t	ft_put_piece_lines(t_piece *piece, t_map *map
-								   , t_coord *coord)
+								, t_coord *coord)
 {
 	uint32_t	i;
 	uint32_t	u;
@@ -50,7 +51,7 @@ static uint32_t	ft_put_piece_lines(t_piece *piece, t_map *map
 	return (0);
 }
 
-void	ft_put_piece(t_map *map, t_piece *piece
+void			ft_put_piece(t_map *map, t_piece *piece
 					, t_coord pos)
 {
 	ft_put_piece_lines(piece, map, &pos);

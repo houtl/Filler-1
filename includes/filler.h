@@ -6,7 +6,7 @@
 /*   By: sclolus <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/12 23:46:52 by sclolus           #+#    #+#             */
-/*   Updated: 2017/06/24 04:38:53 by sclolus          ###   ########.fr       */
+/*   Updated: 2017/06/24 05:28:09 by sclolus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,12 +135,6 @@ uint32_t		ft_overwrite_board(t_piece *piece, t_board *board
 uint32_t		ft_can_be_connected(t_piece *piece, t_board *board
 									, t_coord pos);
 t_map			*ft_get_sandbox_map(t_board *board);
-uint32_t		ft_get_liberties(t_board *board
-					, uint32_t player_index);
-uint32_t		ft_get_liberties_after_claim(t_board *board, t_piece *piece
-					, t_coord pos, uint32_t index_player);
-uint32_t		ft_get_line_liberties(t_board *board, uint32_t player_index
-									, uint32_t y);
 void			ft_put_piece(t_map *map, t_piece *piece
 							, t_coord pos);
 t_coord			ft_get_pos(uint32_t index, t_board *board);
@@ -180,5 +174,6 @@ void			ft_cleanup_map(t_board *board, t_piece *piece);
 # define INVALID_PIECE_LINE "Invalid Piece line"
 # define ALLOC_LINES "Malloc failed at ft_get_playing_board_lines()"
 # define ALOC_PIEC_L "Malloc failed at ft_get_playing_piece_lines()"
+# define CLEANUP_NORM ft_cleanup_piece_coords
 int32_t			ft_error(uint32_t n, char **str, int32_t return_status);
 #endif

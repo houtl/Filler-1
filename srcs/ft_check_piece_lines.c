@@ -6,7 +6,7 @@
 /*   By: sclolus <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/18 06:44:01 by sclolus           #+#    #+#             */
-/*   Updated: 2017/05/18 06:53:37 by sclolus          ###   ########.fr       */
+/*   Updated: 2017/06/24 04:45:45 by sclolus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int32_t	ft_check_piece_integrity(char *line)
 	return (1);
 }
 
-int32_t			ft_check_piece_lines(t_list	*lst, t_piece *piece)
+int32_t			ft_check_piece_lines(t_list *lst, t_piece *piece)
 {
 	uint32_t	len;
 	uint32_t	i;
@@ -44,4 +44,3 @@ int32_t			ft_check_piece_lines(t_list	*lst, t_piece *piece)
 	}
 	return (1);
 }
-

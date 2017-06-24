@@ -18,14 +18,11 @@ SRC= srcs/main.c \
 	srcs/ft_get_filler_lens.c \
 	srcs/ft_read_piece.c \
 	srcs/ft_claim.c \
-	srcs/ft_get_liberties.c \
 	srcs/ft_get_sandbox.c \
 	srcs/ft_put_piece.c \
 	srcs/ft_solve.c \
-	srcs/ft_end_game.c \
 	srcs/ft_print_coord.c \
 	srcs/ft_get_pos.c \
-	srcs/ft_get_liberties_after_claim.c \
 	srcs/ft_get_distance.c \
 	srcs/ft_get_manhattan_distance.c \
 	srcs/ft_normalize_lines.c \

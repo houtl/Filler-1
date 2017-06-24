@@ -6,13 +6,13 @@
 /*   By: sclolus <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/12 23:58:06 by sclolus           #+#    #+#             */
-/*   Updated: 2017/06/23 16:42:53 by sclolus          ###   ########.fr       */
+/*   Updated: 2017/06/24 04:52:22 by sclolus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
 
-static int32_t	ft_get_player_stats(char *line, t_board *board)
+static int32_t			ft_get_player_stats(char *line, t_board *board)
 {
 	uint32_t	i;
 	uint32_t	u;
@@ -46,7 +46,7 @@ static int32_t			ft_put_init_error(char *line, t_board *board)
 	return (ft_error(2, (char*[]){"Parsing error at: ", line}, 0));
 }
 
-int32_t			ft_init_champs(char *line, t_board *board)
+int32_t					ft_init_champs(char *line, t_board *board)
 {
 	static t_init_champs_f		init_f[] = {
 		{PLAYER_SETTING_LINE, &ft_get_player_stats},
@@ -57,7 +57,7 @@ int32_t			ft_init_champs(char *line, t_board *board)
 	while (i < sizeof(init_f) / sizeof(t_init_champs_f))
 	{
 		if (!(ft_strncmp(init_f[i].id, line
-						 , ft_strlen(init_f[i].id))))
+						, ft_strlen(init_f[i].id))))
 		{
 			if (!init_f[i].f(line, board))
 			{
@@ -65,19 +65,19 @@ int32_t			ft_init_champs(char *line, t_board *board)
 				return (0);
 			}
 			else
-				break;
+				break ;
 		}
 		i++;
 	}
 	return (1);
 }
 
-static void	ft_free_header_line(char **line)
+static void				ft_free_header_line(char **line)
 {
 	free(*line);
 }
 
-int32_t		ft_init_champion(t_board *board)
+int32_t					ft_init_champion(t_board *board)
 {
 	char	*line __attribute__((cleanup(ft_free_header_line)));
 

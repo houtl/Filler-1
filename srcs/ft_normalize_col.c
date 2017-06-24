@@ -6,7 +6,7 @@
 /*   By: sclolus <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/20 00:46:48 by sclolus           #+#    #+#             */
-/*   Updated: 2017/06/23 17:04:07 by sclolus          ###   ########.fr       */
+/*   Updated: 2017/06/24 04:47:44 by sclolus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ static void		ft_col_shift(t_piece *piece, uint32_t left_emptyness)
 		{
 			tmp = piece->lines[i * piece->long_nbr + u] << left_emptyness;
 			if (u < piece->long_nbr - 1)
-				tmp |= piece->lines[i * piece->long_nbr + u + 1] >> (63 - left_emptyness);
+				tmp |= piece->lines[i * piece->long_nbr + u + 1]
+					>> (63 - left_emptyness);
 			piece->lines[i * piece->long_nbr + u] = tmp;
 			u++;
 		}
@@ -53,7 +54,7 @@ static void		ft_col_shift(t_piece *piece, uint32_t left_emptyness)
 	}
 }
 
-void		ft_normalize_col(t_piece *piece)
+void			ft_normalize_col(t_piece *piece)
 {
 	uint32_t	i;
 	uint32_t	left_emptyness;
@@ -68,7 +69,7 @@ void		ft_normalize_col(t_piece *piece)
 			left_emptyness++;
 		}
 		else
-			break;
+			break ;
 		i++;
 	}
 	piece->empty_pos.x = left_emptyness;
