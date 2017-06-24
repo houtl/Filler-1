@@ -6,7 +6,7 @@
 /*   By: sclolus <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/12 23:58:06 by sclolus           #+#    #+#             */
-/*   Updated: 2017/06/18 01:41:52 by sclolus          ###   ########.fr       */
+/*   Updated: 2017/06/23 16:42:53 by sclolus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,16 +72,19 @@ int32_t			ft_init_champs(char *line, t_board *board)
 	return (1);
 }
 
+static void	ft_free_header_line(char **line)
+{
+	free(*line);
+}
+
 int32_t		ft_init_champion(t_board *board)
 {
-	char	*line;
+	char	*line __attribute__((cleanup(ft_free_header_line)));
 
+	line = NULL;
 	if (get_next_line(0, &line) == -1)
 		return (ft_error(1, (char*[]){"Get_next_line() failed"}, -1));
 	if (!(ft_init_champs(line, board)))
-	{
-		free(line);
 		return (0);
-	}
 	return (1);
 }

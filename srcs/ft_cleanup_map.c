@@ -1,37 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_cleanup_map.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sclolus <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/05/12 23:56:00 by sclolus           #+#    #+#             */
-/*   Updated: 2017/06/24 04:40:43 by sclolus          ###   ########.fr       */
+/*   Created: 2017/06/23 16:38:25 by sclolus           #+#    #+#             */
+/*   Updated: 2017/06/23 17:08:29 by sclolus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
 
-int	main(void)
+void	ft_cleanup_map(t_board *board, t_piece *piece)
 {
-	static t_board	board;
-	static t_piece	piece;
-
-	if (!(ft_init_champion(&board)))
-		return (EXIT_FAILURE);
-	while (1)
-	{
-		if (!ft_get_board_stats(&board))
-		{
-			ft_error(1, (char*[]){"EXITED"}, 0);
-			return (EXIT_FAILURE);
-		}
-		if (!(ft_get_piece_stats(&piece)))
-		{
-			ft_error(1, (char*[]){"-EXITED"}, 0);
-			return (EXIT_FAILURE);
-		}
-		ft_solve(&board, &piece);
-		ft_cleanup_map(&board, &piece);
-	}
+	free(board->player_1.map.map);
+	free(piece->lines - (piece->empty_pos.y * piece->long_nbr));
 }

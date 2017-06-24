@@ -6,7 +6,7 @@
 /*   By: sclolus <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/22 00:47:57 by sclolus           #+#    #+#             */
-/*   Updated: 2017/06/22 12:33:34 by sclolus          ###   ########.fr       */
+/*   Updated: 2017/06/23 18:01:06 by sclolus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,39 +58,6 @@ uint32_t	ft_overwrite_board(t_piece *piece, t_board *board
 	}
 	return (0);
 }
-
-/* static uint32_t	ft_bin_mask_one_touch(t_piece *piece, t_board *board */
-/* 									 , t_coord *coord, uint32_t y) */
-/* { */
-/* 	uint64_t	ret; */
-/* 	uint64_t	tmp; */
-/* 	uint64_t	mask; */
-/* 	uint64_t	nbr_touch; */
-/* 	uint32_t	x; */
-
-/* 	ret = 0; */
-/* 	x = 0; */
-/* 	nbr_touch = 0; */
-/* 	while (x < piece->long_nbr || (ret && x + (coord->x / 64) */
-/* 								   < board->long_nbr)) */
-/* 	{ */
-/* 		tmp = (x < piece->long_nbr ? (piece->lines[y * piece->long_nbr + x] >> (coord->x & 63)) | ret */
-/* 			   : ret); */
-/* 		if (!ft_is_power_of_two((mask = (tmp */
-/* 			& ((t_champ*)&board->player_1)[board->player_index].map.map[(coord->y) */
-/* 			* board->long_nbr + x + (coord->x / 64)])))) */
-/* 			return (2); */
-/* 		if (mask) */
-/* 			nbr_touch++; */
-/* 		if (coord->x) */
-/* 			ret = (x < piece->long_nbr ? (piece->lines[y * piece->long_nbr + x] << (64 - (coord->x & 63))) : */
-/* 				   0); */
-/* 		else */
-/* 			ret = 0; */
-/* 		x++; */
-/* 	} */
-/* 	return (nbr_touch == 1 ? 1 : 0); */
-/* } */
 
 static uint32_t	ft_bin_mask_one_touch(t_piece *piece, t_board *board
 									 , t_coord coord, t_coord long_coord)

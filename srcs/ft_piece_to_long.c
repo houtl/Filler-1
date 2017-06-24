@@ -6,31 +6,11 @@
 /*   By: sclolus <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/18 06:49:42 by sclolus           #+#    #+#             */
-/*   Updated: 2017/06/17 05:07:31 by sclolus          ###   ########.fr       */
+/*   Updated: 2017/06/23 16:55:39 by sclolus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
-
-/* static void	ft_put_longs_piece(uint64_t *longs, t_piece *piece) */
-/* { */
-/* 	uint32_t	i; */
-/* 	uint32_t	u; */
-
-/* 	u = 0; */
-/* 	while (u < piece->len_y) */
-/* 	{ */
-/* 		i = 0; */
-/* 		while (i < piece->long_nbr) */
-/* 		{ */
-/* 			ft_printf("%064b", longs[u * piece->long_nbr + i]); */
-/* 			i++; */
-/* 		} */
-/* 		ft_putendl(""); */
-/* 		u++; */
-/* 	} */
-/* 	u = 0; */
-/* } */
 
 uint32_t		ft_piece_to_long(t_list *lst, t_piece *piece)
 {
@@ -64,7 +44,6 @@ uint32_t		ft_piece_to_long(t_list *lst, t_piece *piece)
 		lst = lst->next;
 		u++;
 	}
-//	ft_put_longs_piece(longs, piece);
 	piece->lines = longs;
 	return (1);
 }

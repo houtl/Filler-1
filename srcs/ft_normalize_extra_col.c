@@ -6,7 +6,7 @@
 /*   By: sclolus <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/20 01:22:22 by sclolus           #+#    #+#             */
-/*   Updated: 2017/06/20 01:50:16 by sclolus          ###   ########.fr       */
+/*   Updated: 2017/06/23 17:04:19 by sclolus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,5 @@ void		ft_normalize_extra_col(t_piece *piece)
 			break;
 		i--;
 	}
-	ft_putstr_fd("right_emptyness: ", 2);
-	ft_putnbr_fd((int)right_emptyness, 2);
-	ft_putchar_fd('\n', 2);
 	piece->len_x -= right_emptyness;
 }

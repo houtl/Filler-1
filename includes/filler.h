@@ -6,7 +6,7 @@
 /*   By: sclolus <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/12 23:46:52 by sclolus           #+#    #+#             */
-/*   Updated: 2017/06/22 13:10:20 by sclolus          ###   ########.fr       */
+/*   Updated: 2017/06/24 04:38:53 by sclolus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ typedef struct	s_champ
 	t_map		map;
 	t_coord		last_piece;
 	uint32_t	liberties;
-	t_id		player_number; //?
+	char		pad[4];
 }				t_champ;
 
 typedef struct	s_board
@@ -166,6 +166,7 @@ void			ft_free_champs(t_champ *champs);
 void			ft_free_lst(t_list *lst);
 void			ft_free_board(t_board *board);
 void			ft_free_piece(t_piece *piece);
+void			ft_cleanup_map(t_board *board, t_piece *piece);
 
 /*
 ** Error Handling
@@ -177,6 +178,7 @@ void			ft_free_piece(t_piece *piece);
 
 # define INVALID_PIECE_HEADER "Parsing error in piece header"
 # define INVALID_PIECE_LINE "Invalid Piece line"
-
+# define ALLOC_LINES "Malloc failed at ft_get_playing_board_lines()"
+# define ALOC_PIEC_L "Malloc failed at ft_get_playing_piece_lines()"
 int32_t			ft_error(uint32_t n, char **str, int32_t return_status);
 #endif

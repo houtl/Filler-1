@@ -6,7 +6,7 @@
 /*   By: sclolus <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/13 01:41:08 by sclolus           #+#    #+#             */
-/*   Updated: 2017/06/22 12:38:10 by sclolus          ###   ########.fr       */
+/*   Updated: 2017/06/24 04:34:38 by sclolus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,9 @@ static void		ft_clean_line_board(char **line_board)
 
 static int32_t	ft_get_board_lens(t_board *board)
 {
-	char		*line_board __attribute__ ((cleanup(ft_clean_line_board)));
+	char		*line_board __attribute__((cleanup(ft_clean_line_board)));
 	uint32_t	*lens;
-	int32_t	ret;
-
+	int32_t		ret;
 
 	if ((ret = get_next_line(0, &line_board)) == -1)
 		return (-1);
@@ -44,20 +43,18 @@ static t_list	*ft_get_playing_board_lines(t_board *board)
 	char		*line;
 	uint32_t	i;
 
-	i = 0;
+	i = ~0U;
 	lst = NULL;
-	while (i < board->len_y + 1 && get_next_line(0, &line) > 0)
+	while (++i < board->len_y + 1 && get_next_line(0, &line) > 0)
 	{
-		if (!(tmp = ft_lstnew(0, 0)))
+		if (!(tmp = ft_lstnew(0, 0)) && !ft_error(1, (char*[]){ALLOC_LINES}, 0))
 		{
 			free(line);
 			ft_free_lst(lst);
-			ft_error(1, (char*[]){"Malloc failed at ft_get_playing_board_lines()"}, 0);
 			return (NULL);
 		}
 		tmp->content = line;
 		ft_lst_push_back(&lst, tmp);
-		i++;
 	}
 	if (i != board->len_y + 1)
 	{
@@ -68,8 +65,7 @@ static t_list	*ft_get_playing_board_lines(t_board *board)
 	return (lst);
 }
 
-
-int32_t	ft_get_board_stats(t_board *board)
+int32_t			ft_get_board_stats(t_board *board)
 {
 	t_list	*lst;
 

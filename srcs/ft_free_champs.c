@@ -6,7 +6,7 @@
 /*   By: sclolus <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/15 17:35:51 by sclolus           #+#    #+#             */
-/*   Updated: 2017/06/22 13:11:18 by sclolus          ###   ########.fr       */
+/*   Updated: 2017/06/23 16:31:10 by sclolus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,5 @@
 
 void	ft_free_champs(t_champ *champs)
 {
-	free(champs);
+	free(champs->map.map);
 }
