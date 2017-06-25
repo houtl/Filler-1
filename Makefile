@@ -37,12 +37,13 @@ HDR_PATH= ./libft/includes/
 CC= gcc
 CC_FLAGS= -Wall -Werror -Wextra
 
-all: $(NAME)
+all: submodule $(NAME)
+
+submodule:
+	@make -C libft/
 
 $(NAME): $(OBJ)
-	make -C libft/
 	$(CC) $(CC_FLAGS) $^ -L./libft -lft -o $(NAME)
-
 %.o : %.c
 	$(CC) $(CC_FLAGS) $< -c -I$(HDR_PATH) -I./includes -o $@
 
@@ -54,4 +55,3 @@ fclean: clean
 	make -C libft/ fclean
 
 re: fclean all
-	make -C libft/
