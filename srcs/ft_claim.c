@@ -6,14 +6,14 @@
 /*   By: sclolus <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/22 00:47:57 by sclolus           #+#    #+#             */
-/*   Updated: 2017/06/23 18:01:06 by sclolus          ###   ########.fr       */
+/*   Updated: 2017/06/25 08:02:09 by sclolus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
-// you know that there is a problem in cases of nbr_long * 64 < x
+
 static uint32_t	ft_bin_mask_no_touch(t_piece *piece, t_board *board
-									 , t_coord *coord, uint32_t y)
+									, t_coord *coord, uint32_t y)
 {
 	uint64_t	ret;
 	uint64_t	tmp;
@@ -21,16 +21,17 @@ static uint32_t	ft_bin_mask_no_touch(t_piece *piece, t_board *board
 
 	ret = 0;
 	x = 0;
-	while ((x < piece->long_nbr && (coord->x / 64) + x < board->long_nbr) || (ret && (coord->x / 64) + x < board->long_nbr))
+	while ((x < piece->long_nbr || ret) && ((coord->x / 64) + x
+											< board->long_nbr))
 	{
-		tmp = (x < piece->long_nbr ? (piece->lines[y * piece->long_nbr + x] >> (coord->x & 63)) | ret
-			   : ret);
+		tmp = (x < piece->long_nbr ? (piece->lines[y * piece->long_nbr + x]
+				>> (coord->x & 63)) | ret : ret);
 		if (tmp & ((t_champ*)&board->player_1)[board->player_index ^ 1].map
 			.map[(coord->y) * board->long_nbr + x + (coord->x / 64)])
 			return (0);
 		if ((coord->x & 63))
-			ret = (x < piece->long_nbr ? (piece->lines[y * piece->long_nbr + x] << (64 - (coord->x & 63))) :
-				   0);
+			ret = (x < piece->long_nbr ? (piece->lines[y * piece->long_nbr + x]
+					<< (64 - (coord->x & 63))) : 0);
 		else
 			ret = 0;
 		x++;
@@ -38,8 +39,8 @@ static uint32_t	ft_bin_mask_no_touch(t_piece *piece, t_board *board
 	return (1);
 }
 
-uint32_t	ft_overwrite_board(t_piece *piece, t_board *board
-							   , t_coord pos)
+uint32_t		ft_overwrite_board(t_piece *piece, t_board *board
+							, t_coord pos)
 {
 	uint32_t	i;
 	uint32_t	u;
@@ -60,35 +61,36 @@ uint32_t	ft_overwrite_board(t_piece *piece, t_board *board
 }
 
 static uint32_t	ft_bin_mask_one_touch(t_piece *piece, t_board *board
-									 , t_coord coord, t_coord long_coord)
+									, t_coord coord, t_coord long_coord)
 {
 	uint64_t	tmp;
-	uint64_t	ret;
+	uint64_t	r;
 	uint32_t	i;
 	uint64_t	mask;
 	uint32_t	nbr_touch;
 
-	i = 0;
+	i = ~0U;
 	nbr_touch = 0;
-	ret = 0;
-	while ((i < piece->long_nbr && (coord.x / 64) + i < board->long_nbr) || (ret && (coord.x / 64) + i < board->long_nbr))
+	r = 0;
+	while ((++i < piece->long_nbr || r) && (long_coord.x + i < board->long_nbr))
 	{
-		tmp = (i < piece->long_nbr) ? piece->lines[long_coord.y * piece->long_nbr + i] >> (coord.x & 63) | ret : ret;
-		if (!ft_is_power_of_two((mask = tmp & ((t_champ*)&board->player_1)[board->player_index].map.map[(coord.y)
-			* board->long_nbr + i + long_coord.x])))
+		tmp = (i < piece->long_nbr) ? piece->lines
+			[long_coord.y * piece->long_nbr + i] >> (coord.x & 63) | r : r;
+		if (!ft_is_power_of_two((mask = tmp & ((t_champ*)&board->player_1)
+[board->player_index].map.map[(coord.y) * board->long_nbr + i + long_coord.x])))
 			return (2);
 		if (mask)
 			nbr_touch++;
 		if ((coord.x & 63) == 0)
-			ret = 0;
+			r = 0;
 		else
-			ret = (i < piece->long_nbr) ? piece->lines[long_coord.y * piece->long_nbr + i] << (64 - (coord.x & 63)) : 0;
-		i++;
+			r = (i < piece->long_nbr) ? piece->lines[long_coord.y
+					* piece->long_nbr + i] << (64 - (coord.x & 63)) : 0;
 	}
 	return (nbr_touch);
 }
 
-uint32_t	ft_can_be_connected(t_piece *piece, t_board *board
+uint32_t		ft_can_be_connected(t_piece *piece, t_board *board
 								, t_coord pos)
 {
 	uint32_t	i;
@@ -103,7 +105,8 @@ uint32_t	ft_can_be_connected(t_piece *piece, t_board *board
 		return (0);
 	while (u < pos.y + piece->len_y)
 	{
-		nbr_touch += ft_bin_mask_one_touch(piece, board, (t_coord){i, u}, (t_coord){pos.x / 64, u - pos.y});
+		nbr_touch += ft_bin_mask_one_touch(piece, board
+					, (t_coord){i, u}, (t_coord){pos.x / 64, u - pos.y});
 		if (nbr_touch > 1)
 			return (0);
 		u++;
@@ -111,35 +114,10 @@ uint32_t	ft_can_be_connected(t_piece *piece, t_board *board
 	return (nbr_touch == 1 ? 1 : 0);
 }
 
-uint32_t	ft_claim(t_piece *piece, t_board *board, t_coord pos)
+uint32_t		ft_claim(t_piece *piece, t_board *board, t_coord pos)
 {
-	uint32_t	x;
-	uint32_t	y;
-
-	y = pos.y;
-	x = pos.x;
-	uint32_t a = (!ft_overwrite_board(piece, board, pos));
-	uint32_t b = (ft_can_be_connected(piece, board, pos));
-	if ((a = !ft_overwrite_board(piece, board, pos))
-		&& (b = ft_can_be_connected(piece, board, pos)))
-	{
-#if DEBUG == 1
-		ft_putchar_fd('$', 2);
-# endif
+	if ((!ft_overwrite_board(piece, board, pos))
+		&& (ft_can_be_connected(piece, board, pos)))
 		return (1);
-	}
-	else
-	{
-#if DEBUG == 1
-		if (!a && !b)
-			ft_putchar_fd('#', 2);
-		else if (!b)
-			ft_putchar_fd('/', 2);
-		else if (!a)
-			ft_putchar_fd('o', 2);
-		else
-			ft_putchar_fd('.', 2);
-# endif
-	}
 	return (0);
 }

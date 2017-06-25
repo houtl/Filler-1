@@ -7,6 +7,7 @@ SRC= srcs/main.c \
 	srcs/ft_free_champs.c \
 	srcs/ft_free_board.c \
 	srcs/ft_free_piece.c \
+	srcs/ft_cleanup_piece_coord.c \
 	srcs/ft_cleanup_map.c \
 	srcs/ft_read_board.c \
 	srcs/ft_lines_to_long.c \
@@ -24,6 +25,7 @@ SRC= srcs/main.c \
 	srcs/ft_print_coord.c \
 	srcs/ft_get_pos.c \
 	srcs/ft_get_distance.c \
+	srcs/ft_update_distance_tabs.c \
 	srcs/ft_get_manhattan_distance.c \
 	srcs/ft_normalize_lines.c \
 	srcs/ft_normalize_col.c \
@@ -39,10 +41,10 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	make -C libft/
-	$(CC) $(CC_FLAGS) $^ -L./libft -lft -L./ft_printf -lftprintf -I./ft_printf/ -o $(NAME)
+	$(CC) $(CC_FLAGS) $^ -L./libft -lft -o $(NAME)
 
 %.o : %.c
-	$(CC) $(CC_FLAGS) $< -c -I$(HDR_PATH) -I./includes -I./ft_printf/ -o $@
+	$(CC) $(CC_FLAGS) $< -c -I$(HDR_PATH) -I./includes -o $@
 
 clean:
 	rm -f $(OBJ)

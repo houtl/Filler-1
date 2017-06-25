@@ -6,7 +6,7 @@
 /*   By: sclolus <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/20 02:42:49 by sclolus           #+#    #+#             */
-/*   Updated: 2017/06/24 05:09:28 by sclolus          ###   ########.fr       */
+/*   Updated: 2017/06/25 08:09:23 by sclolus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,89 +85,28 @@ static uint32_t	ft_get_distance_from_piece(t_coord *piece_coords, t_board *board
 	return (distance);
 }
 
-static void			ft_update_distance_tab(uint32_t *distance
-										, t_board *board, t_coord pos)
-{
-	uint32_t	i;
-	uint32_t	u;
-	uint32_t	x;
-
-	i = 0;
-	while (i < board->len_y)
-	{
-		u = 0;
-		while (u < board->long_nbr)
-		{
-			x = 0;
-			while (x < 64)
-			{
-				distance[i * board->len_x + u * 64 + x] =
-					ft_get_manhattan_distance(pos, (t_coord){u * 64 + x, i});
-				x++;
-			}
-			u++;
-		}
-		i++;
-	}
-	distance[-1] = 1;
-}
-
-static void			ft_update_distance_tabs(uint32_t distance_tab[10000][10001]
-											, t_board *board)
-{
-	uint32_t	i;
-	uint32_t	u;
-	uint32_t	x;
-
-	i = 0;
-	while (i < board->len_y)
-	{
-		u = 0;
-		while (u < board->long_nbr)
-		{
-			x = ~0U;
-			while (++x < 64)
-				if (((((t_champ*)&board->player_1)
-					[board->player_index ^ 1].map.map
-					[i * board->long_nbr + u]) >> (63 - x)) & 1
-					&& !distance_tab[i * board->len_x + u * 64 + x][0])
-					ft_update_distance_tab(distance_tab[i * board->len_x
-					+ u * 64 + x] + 1, board, (t_coord){u * 64 + x, i});
-			u++;
-		}
-		i++;
-	}
-}
-
-static void			ft_cleanup_piece_coords(t_coord **piece_coords)
-{
-	free(*piece_coords);
-}
-
 uint32_t		ft_get_distance(t_board *board, t_piece *piece, t_coord pos)
 {
 	static uint32_t	distance_tab[10000][10001];
 	t_coord			*piece_coords __attribute__((cleanup(CLEANUP_NORM)));
 	uint32_t		nbr_coords;
 	uint32_t		map_size;
-	uint32_t		i;
-	uint32_t		distance;
-	uint32_t		tmp;
+	uint32_t		tab[3];
 
-	i = ~0U;
+	tab[0] = ~0U;
 	ft_update_distance_tabs(distance_tab, board);
 	nbr_coords = ft_get_piece_nbr_coords(piece);
 	piece_coords = NULL;
 	if (!(piece_coords = ft_get_piece_coords(piece, nbr_coords, pos)))
 		return (~0U);
-	distance = 0xFFFFFFF;
+	tab[1] = 0xFFFFFFFF;
 	map_size = board->len_x * board->len_y;
-	while (++i < map_size)
+	while (++tab[0] < map_size)
 	{
-		if (distance_tab[i][0])
-			if ((tmp = ft_get_distance_from_piece(piece_coords, board
-				, distance_tab[i] + 1, nbr_coords)) < distance)
-				distance = tmp;
+		if (distance_tab[tab[0]][0])
+			if ((tab[2] = ft_get_distance_from_piece(piece_coords, board
+				, distance_tab[tab[0]] + 1, nbr_coords)) < tab[1])
+				tab[1] = tab[2];
 	}
-	return (distance);
+	return (tab[1]);
 }

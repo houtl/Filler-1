@@ -6,21 +6,15 @@
 /*   By: sclolus <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/12 23:46:52 by sclolus           #+#    #+#             */
-/*   Updated: 2017/06/24 05:28:09 by sclolus          ###   ########.fr       */
+/*   Updated: 2017/06/25 08:12:55 by sclolus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FILLER_H
 # define FILLER_H
 
-// DEBUG
-
-# define CHECK(X) do{ft_putendl_fd("_______", 2);ft_putendl_fd(#X, 2);ft_putendl_fd("_______", 2);}while(0);
-
 # include "libft.h"
 # include <stdint.h>
-# include "ft_printf.h"
-
 
 # define CHAMP_NAME "sclolus.filler"
 # define FILLER_NAME "sclolus.filler: "
@@ -35,8 +29,6 @@
 
 # define PIECE_HEADER "Piece "
 # define PIECE_HEADER_LEN (sizeof(PIECE_HEADER) - 1)
-
-#define DEBUG 0
 
 typedef int32_t	t_id;
 
@@ -91,7 +83,6 @@ typedef struct	s_init_champs_f
 	int32_t		(*f)(char *, t_board *);
 }				t_init_champs_f;
 
-
 /*
 ** Parsing
 */
@@ -123,7 +114,6 @@ void			ft_normalize_extra_lines(t_piece *piece);
 int32_t			ft_init_champs(char *line, t_board *board);
 int32_t			ft_init_champion(t_board *board);
 
-
 /*
 ** Solve
 */
@@ -150,6 +140,8 @@ void			ft_end_game(t_board *board, t_piece *piece);
 uint32_t		ft_get_distance(t_board *board, t_piece *piece, t_coord pos);
 uint32_t		ft_get_manhattan_distance(t_coord pos_1
 									, t_coord pos_2);
+void			ft_update_distance_tabs(uint32_t distance_tab[10000][10001]
+									, t_board *board);
 
 /*
 ** Free functions
@@ -161,6 +153,7 @@ void			ft_free_lst(t_list *lst);
 void			ft_free_board(t_board *board);
 void			ft_free_piece(t_piece *piece);
 void			ft_cleanup_map(t_board *board, t_piece *piece);
+void			ft_cleanup_piece_coords(t_coord **piece_coords);
 
 /*
 ** Error Handling
@@ -175,5 +168,6 @@ void			ft_cleanup_map(t_board *board, t_piece *piece);
 # define ALLOC_LINES "Malloc failed at ft_get_playing_board_lines()"
 # define ALOC_PIEC_L "Malloc failed at ft_get_playing_piece_lines()"
 # define CLEANUP_NORM ft_cleanup_piece_coords
+
 int32_t			ft_error(uint32_t n, char **str, int32_t return_status);
 #endif
