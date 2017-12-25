@@ -1,0 +1,9 @@
+{
+  "language": "c",
+  "script": [
+      "curl -O https://raw.githubusercontent.com/houtl/filler_tester/master/filler_test.sh && sh filler_test.sh"
+  ],
+  "os": "osx",
+  "env": "ARCH=x86_64",
+  "compiler": "clang"
+}
